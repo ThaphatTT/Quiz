@@ -35,5 +35,36 @@ app.get('/', (req,res)=>{
   })
 })
 
+app.post('/create', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    console.log(`connected as id ${connection.threadId}`);
+
+    const data = {
+      Title: req.body.Title,
+      Description: req.body.Description,
+      ContactInformation: req.body.ContactInformation,
+      StartTimeStamp: new Date(),
+      Status: 1
+    };
+
+    const sql = 'INSERT INTO ticket SET ?';
+
+    connection.query(sql, data, (err, results) => {
+      connection.release();
+
+      if (!err) {
+        res.send({ 
+          message: 'Create Success!!',
+          data: data
+      });
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+
 
 app.listen(port,() => console.log((`listen on port ${port}`)));
