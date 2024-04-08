@@ -40,6 +40,36 @@ app.get('/tickets', (req, res) => {
     let sql = `SELECT * FROM ticket`;
     
     if (req.query.status) {
+      const statusMap = {
+        '1': 'pending',
+        '2': 'rejected',
+        '3': 'resolved',
+        '4': 'accepted'
+      };
+      const status = statusMap[req.query.status];
+      if (status) {
+        sql += ` WHERE Status = ${connection.escape(status)}`;
+      }
+    }
+    
+    sql += ` ORDER BY LastestTicketTimeStamp DESC, Status`;
+    
+    connection.query(sql, (err, results) => {
+      if (err) throw err;
+      res.send({
+        message : 'List & Sort Tickets Success!!',
+        data : results
+      });
+    });
+  });
+});
+
+
+app.get('/tickets', (req, res) => {
+  pool.getConnection((err, connection) => {
+    let sql = `SELECT * FROM ticket`;
+    
+    if (req.query.status) {
       sql += ` WHERE Status = ${connection.escape(req.query.status)}`;
     }
     
