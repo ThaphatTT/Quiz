@@ -103,6 +103,7 @@ export default function UserList() {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell align="right">Order</TableCell>
               <TableCell align="right">ID</TableCell>
               <TableCell align="center">Title</TableCell>
               <TableCell align="left">Status</TableCell>
@@ -110,8 +111,9 @@ export default function UserList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ticket.map((ticket) => (
+            {ticket.map((ticket, index) => (
               <TableRow key={ticket.id}>
+              <TableCell align="right">{index + 1}</TableCell>
               <TableCell align="right">{ticket.id}</TableCell>
               <TableCell align="left">{ticket.Title}</TableCell>
               <TableCell align="left">{status[ticket.Status]}</TableCell>
