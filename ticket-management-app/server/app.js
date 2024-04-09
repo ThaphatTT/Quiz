@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const cors = require('cors');
 
 const app = express()
 
 const port = process.env.PORT || 4000
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({extended : false}))
 
@@ -21,7 +24,6 @@ const pool = mysql.createPool({
 
 
 app.get('/', (req,res)=>{
-  res.header("Access-Control-Allow-Origin", "*");
   pool.getConnection((err, connection) =>{
     if(err) throw err
     console.log(`connected as id ${connection.threadId}`);
@@ -33,11 +35,11 @@ app.get('/', (req,res)=>{
         console.log(err);
       }
     })
+    connection.release()
   })
 })
 
 app.get('/status', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   pool.getConnection((err, connection) => {
     let sql = `SELECT * FROM Status`;
     
@@ -48,43 +50,30 @@ app.get('/status', (req, res) => {
         data : results
       });
     });
+    connection.release()
   });
 });
 
 
-app.get('/categorizeTicket', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
+app.get('/categorizeTicket/', (req, res) => {
   pool.getConnection((err, connection) => {
     let sql = `SELECT * FROM ticket`;
-    
-    if (req.query.status) {
-      const statusMap = {
-        '1': 'pending',
-        '2': 'rejected',
-        '3': 'resolved',
-        '4': 'accepted'
-      };
-      const status = statusMap[req.query.status];
-      if (status) {
-        sql += ` WHERE Status = ${connection.escape(status)}`;
-      }
-    }
-    
+    sql += ` WHERE Status = ${connection.escape(req.query.status)}`;
     sql += ` ORDER BY LastestTicketTimeStamp DESC, Status`;
     
     connection.query(sql, (err, results) => {
       if (err) throw err;
       res.send({
-        message : 'List & Sort Tickets Success!!',
+        message : 'Category & Sort Tickets Success!!',
         data : results
       });
     });
+    connection.release()
   });
 });
 
 
 app.get('/tickets', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   pool.getConnection((err, connection) => {
     let sql = `SELECT * FROM ticket`;
     
@@ -101,6 +90,7 @@ app.get('/tickets', (req, res) => {
         data : results
       });
     });
+    connection.release();
   });
 });
 
@@ -111,13 +101,14 @@ app.get('/ticket/:id', (req,res)=>{
     connection.query('SELECT * from ticket WHERE id = ?',[req.params.id] ,(err, rows) =>{
       connection.release()
       if(!err){
-        res.send(rows)
+        res.send(rows);
       }else{
         console.log(err);
       }
-    })
-  })
-})
+    });
+    connection.release();
+  });
+});
 
 app.post('/create', (req, res) => {
   pool.getConnection((err, connection) => {
@@ -146,6 +137,7 @@ app.post('/create', (req, res) => {
         console.log(err);
       }
     });
+    connection.release();
   });
 });
 
@@ -172,6 +164,7 @@ app.put('/updateTicket/:id', (req, res) => {
             });
         });
     });
+    connection.release();
   })
 });
 

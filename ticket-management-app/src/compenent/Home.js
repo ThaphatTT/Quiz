@@ -20,6 +20,7 @@ export default function UserList() {
   useEffect(() => {
     TicketGet()
     StatusGet()
+    fetchTicketsByStatus(1)
   }, [])
   
   const StatusGet = () => {
@@ -27,7 +28,6 @@ export default function UserList() {
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
           const statusNames = result.data.reduce((acc, status) => {
             acc[status.id] = status.nameStatus;
             return acc;
@@ -35,6 +35,9 @@ export default function UserList() {
           setStatus(statusNames);
         }
       )
+      .catch(error => {
+        console.error('Error fetching tickets:', error);
+      });
   }
 
   const TicketGet = () => {
@@ -46,8 +49,20 @@ export default function UserList() {
           setTickets(result.data)
         }
       )
+      .catch(error => {
+        console.error('Error fetching tickets:', error);
+      });
   }
 
+  function fetchTicketsByStatus(status) {
+    fetch(`http://localhost:4000/categorizeTicket?status=${status}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setTickets(data.data)
+      })
+      .catch(error => console.error('Error:', error));
+  }
 
   const UpdateUser = id => {
     window.location = '/update/'+id
@@ -71,26 +86,18 @@ export default function UserList() {
           </Box>
         </Box>
         <Stack direction="row" spacing={2} flexWrap="wrap">
-                <Button size="small" variant="contained" sx ={{
-                  background : "#039be5"
-                }}>
-                  Pending
-                </Button>
-                <Button size="small"  variant="contained" sx ={{
-                  background : "#f6734b"
-                }}>
-                  Rejected
-                </Button>
-                <Button size="small" variant="contained" sx ={{
-                  background : "#7cb342"
-                }}>
-                  Resolved
-                </Button>
-                <Button  size="small" variant="contained" sx ={{
-                  background : "#5b874b"
-                }}>
-                  Accepted
-                </Button>
+          <Button size="small" variant="contained" sx={{ background: "#039be5" }} onClick={() => fetchTicketsByStatus(1)}>
+            Pending
+          </Button>
+          <Button size="small" variant="contained" sx={{ background: "#f6734b" }} onClick={() => fetchTicketsByStatus(2)}>
+            Rejected
+          </Button>
+          <Button size="small" variant="contained" sx={{ background: "#7cb342" }} onClick={() => fetchTicketsByStatus(3)}>
+            Resolved
+          </Button>
+          <Button size="small" variant="contained" sx={{ background: "#5b874b" }} onClick={() => fetchTicketsByStatus(4)}>
+            Accepted
+          </Button>
         </Stack>
         <TableContainer component={Paper}>
         <Table aria-label="simple table">
