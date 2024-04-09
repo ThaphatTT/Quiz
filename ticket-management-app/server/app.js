@@ -4,7 +4,7 @@ const mysql = require('mysql');
 
 const app = express()
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 4000
 
 app.use(bodyParser.urlencoded({extended : false}))
 
@@ -21,6 +21,7 @@ const pool = mysql.createPool({
 
 
 app.get('/', (req,res)=>{
+  res.header("Access-Control-Allow-Origin", "*");
   pool.getConnection((err, connection) =>{
     if(err) throw err
     console.log(`connected as id ${connection.threadId}`);
@@ -35,7 +36,24 @@ app.get('/', (req,res)=>{
   })
 })
 
-app.get('/tickets', (req, res) => {
+app.get('/status', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  pool.getConnection((err, connection) => {
+    let sql = `SELECT * FROM Status`;
+    
+    connection.query(sql, (err, results) => {
+      if (err) throw err;
+      res.send({
+        message : 'Fetch Status Success!!',
+        data : results
+      });
+    });
+  });
+});
+
+
+app.get('/categorizeTicket', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   pool.getConnection((err, connection) => {
     let sql = `SELECT * FROM ticket`;
     
@@ -66,6 +84,7 @@ app.get('/tickets', (req, res) => {
 
 
 app.get('/tickets', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   pool.getConnection((err, connection) => {
     let sql = `SELECT * FROM ticket`;
     
