@@ -119,7 +119,7 @@ export default function Ticket() {
               <TableCell align="right">{status[ticket.Status]}</TableCell>
               <TableCell align="center">
                 <ButtonGroup color="primary" aria-label="outlined primary button group">
-                  <Button onClick={() => UpdateUser(ticket.id)}>Edit</Button>
+                  <Button onClick={() => UpdateUser(ticket.id)}>Update</Button>
                 </ButtonGroup>
               </TableCell>
             </TableRow>
