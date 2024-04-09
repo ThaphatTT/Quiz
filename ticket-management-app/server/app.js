@@ -126,12 +126,12 @@ app.post('/create', (req, res) => {
     const sql = 'INSERT INTO ticket SET ?';
 
     connection.query(sql, data, (err, results) => {
-      connection.release();
 
       if (!err) {
         res.send({ 
           message: 'Create Success!!',
-          data: data
+          data: data,
+          status: 'ok'
       });
       } else {
         console.log(err);

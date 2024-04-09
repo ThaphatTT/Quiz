@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { Link } from "react-router-dom";
 
-export default function UserList() {
+export default function Ticket() {
   const [ticket, setTickets] = useState([]);
   const [status, setStatus] = useState({});
   useEffect(() => {
