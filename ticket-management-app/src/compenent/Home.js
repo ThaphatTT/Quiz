@@ -103,20 +103,20 @@ export default function UserList() {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">Order</TableCell>
-              <TableCell align="right">ID</TableCell>
+              <TableCell align="left">Order</TableCell>
+              <TableCell align="left">ID</TableCell>
               <TableCell align="center">Title</TableCell>
-              <TableCell align="left">Status</TableCell>
+              <TableCell align="right">Status</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {ticket.map((ticket, index) => (
               <TableRow key={ticket.id}>
-              <TableCell align="right">{index + 1}</TableCell>
-              <TableCell align="right">{ticket.id}</TableCell>
-              <TableCell align="left">{ticket.Title}</TableCell>
-              <TableCell align="left">{status[ticket.Status]}</TableCell>
+              <TableCell align="left">{index + 1}</TableCell>
+              <TableCell align="left">{ticket.id}</TableCell>
+              <TableCell align="center">{ticket.Title}</TableCell>
+              <TableCell align="right">{status[ticket.Status]}</TableCell>
               <TableCell align="center">
                 <ButtonGroup color="primary" aria-label="outlined primary button group">
                   <Button onClick={() => UpdateUser(ticket.id)}>Edit</Button>
