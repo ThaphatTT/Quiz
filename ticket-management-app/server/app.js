@@ -99,7 +99,6 @@ app.get('/ticket/:id', (req,res)=>{
     if(err) throw err
     console.log(`connected as id ${connection.threadId}`);
     connection.query('SELECT * from ticket WHERE id = ?',[req.params.id] ,(err, rows) =>{
-      connection.release()
       if(!err){
         res.send(rows);
       }else{
@@ -160,7 +159,8 @@ app.put('/updateTicket/:id', (req, res) => {
             if (err) throw err;
             res.send({
               message : 'Update & Insert Data Sucess!!',
-              data : data
+              data : data,
+              status : 'ok'
             });
         });
     });
