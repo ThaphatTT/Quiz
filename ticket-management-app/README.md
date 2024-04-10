@@ -1,7 +1,7 @@
 This is a Ticket Management project
 
 Exmaple Image in Application
-![Home_Pending](/img/1_Home_Pending.png)
+![Home_Pending](img/1_Home_Pending.png)
 ![Home_Rejected](img/2_Home_Rejected.png)
 ![Home_Resolved](img/3_Home_Resolved.png)
 ![Home_Accepted](img/4_Home_Accepted.png)
