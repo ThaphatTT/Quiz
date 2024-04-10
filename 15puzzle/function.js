@@ -1,13 +1,14 @@
 const rows = 4;
 const columns = 4;
 
-let currTile;
-let otherTile;
+let obTile;
+let airTile;
 
 let imgOrder = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]
 
 const pathFolder = "img/"
 window.onload = function(){
+  imgOrder = randomIndex(imgOrder)
   for(let r = 0; r<rows; r++){
     for(let c = 0; c<columns; c++){
       let tile = document.createElement("img");
@@ -23,10 +24,12 @@ window.onload = function(){
       document.getElementById("board").append(tile);
     }
   }
+  checkWin()
+  console.log(checkWin());
 }
 
 function dragStart(){
-  currTile = this;
+  obTile = this;
 }
 
 function dragOver(e){
@@ -42,11 +45,69 @@ function dragLeave(){
 }
 function dragDrop(e){
   e.preventDefault();
-  otherTile = this;
+  airTile = this;
 }
 function dragEnd(){
-  let currImg = currTile.src
-  let otherImg = otherTile.src;
-  currTile.src = otherImg;
-  otherTile.src = currImg;
+  if (!airTile.src.includes("16.png")) {
+    return;
+  }
+
+  let tileCoords = obTile.id.split("-");
+  let r = parseInt(tileCoords[0]);
+  let c = parseInt(tileCoords[1]);
+  // console.log('Tile r'+r);
+  // console.log('Tile c'+c);
+  // console.log('TileCoords'+tileCoords);
+  let airCoords = airTile.id.split("-");
+  let r2 = parseInt(airCoords[0]);
+  let c2 = parseInt(airCoords[1]);
+  // console.log('Air r:'+r);
+  // console.log('Air c:'+c);
+  // console.log('AirCoords :'+ airCoords);
+
+  let moveLeft = r == r2 && c2 == c-1;
+  // console.log('move left :'+moveLeft);
+  let moveRight = r == r2 && c2 == c+1;
+  // console.log('move right :'+moveRight);
+  let moveUp = c == c2 && r2 == r-1;
+  // console.log('move up :'+moveUp);
+  let moveDown = c == c2 && r2 == r+1;
+  // console.log('move down :'+moveDown);
+  let checkObjectMove = moveLeft || moveRight || moveUp || moveDown;
+  // console.log(checkObjectMove);
+
+  if (checkObjectMove) {
+      let tileImg = obTile.src;
+      let airImg = airTile.src;
+      
+      obTile.src = airImg;
+      airTile.src = tileImg;
+  }
+
+}
+
+function randomIndex(array) {
+  let currentIndex = array.length;
+  let temporaryValue;
+  let randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
+function checkWin() {
+  let tiles = document.getElementById("board").getElementsByTagName("img");
+  for (let i = 0; i < tiles.length; i++) {
+    let filename = tiles[i].src.replace(/^.*[\\\/]/, '');
+    let number = filename.split(".")[0];
+    if (number != i + 1) {
+      return false;
+    }
+  }
+  return true;
 }
