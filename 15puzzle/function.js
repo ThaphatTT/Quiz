@@ -12,7 +12,7 @@ window.onload = function(){
     for(let c = 0; c<columns; c++){
       let tile = document.createElement("img");
       tile.id = r.toString() + "-" + c.toString();
-      tile.src = pathFolder + imgOrder.shift() + ".jpg"
+      tile.src = pathFolder + imgOrder.shift() + ".png"
 
       tile.addEventListener("dragstart",dragStart);
       tile.addEventListener("dragover",dragOver);
