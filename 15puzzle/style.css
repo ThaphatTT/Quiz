@@ -51,6 +51,8 @@ body {
 }
 #timer{
   text-align: end;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #container-menu{

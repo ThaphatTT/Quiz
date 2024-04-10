@@ -7,26 +7,38 @@ let airTile;
 let imgOrder = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]
 
 const pathFolder = "img/"
-window.onload = function(){
-  imgOrder = randomIndex(imgOrder)
-  for(let r = 0; r<rows; r++){
-    for(let c = 0; c<columns; c++){
-      let tile = document.createElement("img");
-      tile.id = r.toString() + "-" + c.toString();
-      tile.src = pathFolder + imgOrder.shift() + ".png"
 
-      tile.addEventListener("dragstart",dragStart);
-      tile.addEventListener("dragover",dragOver);
-      tile.addEventListener("dragenter",dragEnter);
-      tile.addEventListener("dragleave",dragLeave);
-      tile.addEventListener("drop",dragDrop);
-      tile.addEventListener("dragend",dragEnd);
-      document.getElementById("board").append(tile);
+let timer;
+let seconds = 0;
+window.onload = function(){
+  startTimer();
+  let countdown = 3;
+  let countdownTimer = setInterval(function() {
+    document.getElementById('title').innerText = "Game starts in: " + countdown + "s";
+    countdown--;
+    if (countdown < 0) {
+      clearInterval(countdownTimer);
+      imgOrder = randomIndex(imgOrder)
+      for(let r = 0; r<rows; r++){
+        for(let c = 0; c<columns; c++){
+          let tile = document.createElement("img");
+          tile.id = r.toString() + "-" + c.toString();
+          tile.src = pathFolder + imgOrder.shift() + ".png"
+
+          tile.addEventListener("dragstart",dragStart);
+          tile.addEventListener("dragover",dragOver);
+          tile.addEventListener("dragenter",dragEnter);
+          tile.addEventListener("dragleave",dragLeave);
+          tile.addEventListener("drop",dragDrop);
+          tile.addEventListener("dragend",dragEnd);
+          document.getElementById("board").append(tile);
+          document.getElementById('title').innerText = 'Puzzle Game'
+        }
+      }
     }
-  }
-  checkWin()
-  console.log(checkWin());
+  }, 1000);
 }
+
 
 function dragStart(){
   obTile = this;
@@ -83,6 +95,7 @@ function dragEnd(){
       obTile.src = airImg;
       airTile.src = tileImg;
   }
+  checkWin();
 
 }
 
@@ -109,5 +122,17 @@ function checkWin() {
       return false;
     }
   }
+  stopTimer()
   return true;
+}
+
+function startTimer() {
+  timer = setInterval(function() {
+    seconds++;
+    document.getElementById('timer').innerText = "Time: " + seconds + "s";
+  }, 4000);
+}
+
+function stopTimer() {
+  clearInterval(timer);
 }
