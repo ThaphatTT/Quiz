@@ -29,7 +29,6 @@ body {
   border-width: 1px;
 }
 #container{
-
   justify-content: center;
   justify-items: center;
   align-items: center;
@@ -48,7 +47,14 @@ body {
   background-color: gray;
   align-content: center;
   border-radius: 15px;
+  transition: opacity 0.5s;
 }
+
+#box:hover {
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+
 #timer{
   text-align: end;
   margin-top: 5px;
@@ -58,30 +64,53 @@ body {
 #container-menu{
   width: 350px;
   height:400px;
-  background-color: gray;
-  z-index: -1;
+  background-color: #f8f9fa;
+  z-index: 0;
   position: absolute;
   top : 20%;
   bottom : 40%;
   right: 40%;
-  left: 15%;
-}
-#container-menu-title{
+  left: 11%;
   display: inline-block;
-  position: relative;
-  width: 350px;
-  height: 50px;
-  align-content: center;
-  
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
+
+#container-menu-title{
+  margin-bottom: 20px;
+}
+
 #container-menu-title-text{
-  margin-left: 10px;
-  text-align: start;
-  font-size: 25px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #343a40;
 }
+
 #container-menu-close{
+  cursor: pointer;
+  font-size: 20px;
+  color: #343a40;
   position: absolute;
-  font-size: 35px;
-  top : 0%;
-  left: 91%;
+  top: 10px;
+  right: 10px;
+  opacity: 0.2;
+}
+
+#container-menu-close:hover {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+#container-menu-board-players{
+  background-color: #495057;
+  display: block;
+  width: 350px;
+  height:350px;
+}
+
+.hidden {
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
 }

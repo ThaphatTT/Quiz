@@ -10,7 +10,7 @@ const pathFolder = "img/"
 
 let timer;
 let seconds = 0;
-window.onload = function(){
+export function startGame(){
   startTimer();
   let countdown = 3;
   let countdownTimer = setInterval(function() {
@@ -96,6 +96,7 @@ function dragEnd(){
       airTile.src = tileImg;
   }
   checkWin();
+  console.log(checkWin());
 
 }
 

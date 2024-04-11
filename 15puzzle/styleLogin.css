@@ -1,0 +1,46 @@
+#container-login{
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 200px;
+  text-align: center;
+}
+
+
+#login-Name{
+  display:block;
+  font-size: 60px;
+  margin-bottom: 50px;
+}
+
+#login-title{
+  display:block;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+#container-input{
+  align-items: center;
+  
+}
+#login-input{
+  font-size: 25px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  display: inline;
+  border-width: 1px;
+}
+
+#login-button{
+  display: inline-block;
+  margin-left: -6px;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 9.5px;
+  padding-bottom: 3px;
+}

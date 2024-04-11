@@ -4,23 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <script src = 'function.js'></script>
+  <link rel="stylesheet" href="styleLogin.css">
+  
   <title>Puzzle Game</title>
 </head>
 <body>
-  <div id = "container">
+  <div id = "container" class="hidden">
     <div id = "title">Puzzle Game</div>
     <div id = "container-board">
       <div id = 'box'>Rank</div>
       <div id = "timer"></div>
       <div id = "board"></div>
-      <div id = 'container-menu'>
+      <div id = 'container-menu' class="hidden">
         <div id ='container-menu-title'>
           <div id ='container-menu-title-text'>Ranking</div>
-          <div id = 'container-menu-close'>X</div>
+          <div id = 'container-menu-close'>x</div>
+        </div>
+        <div id = 'container-menu-board-players'>
+          <div id = 'container-menu-board-player'></div>
         </div>
       </div>
     </div>
   </div>
+  <div id = 'container-login'>
+    <div id = 'login-Name'>Puzzle Game!!!</div>
+    <div id = 'login-title'>Please, Input your name</div>
+    <div id = 'container-input'>
+      <input id = 'login-input' type="text">
+      <div id = 'login-button'>Enter</div>
+    </div>
+  </div>
+  <script type="module" src="interacUI.js"></script>
+  <script type="module" src="function.js"></script>
 </body>
 </html>
