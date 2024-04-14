@@ -1,3 +1,4 @@
+import { showVictoryScreen } from './interacUI.js'
 const rows = 4;
 const columns = 4;
 
@@ -13,17 +14,25 @@ let seconds = 0;
 export function startGame(){
   startTimer();
   let countdown = 3;
+  seconds = 0;
+  document.getElementById('timer').innerText = "Time: " + seconds + "s";
+  let gameImgOrder = [...imgOrder]
   let countdownTimer = setInterval(function() {
     document.getElementById('title').innerText = "Game starts in: " + countdown + "s";
     countdown--;
+    gameImgOrder = randomIndex(gameImgOrder)
+    console.log(imgOrder);
     if (countdown < 0) {
       clearInterval(countdownTimer);
-      imgOrder = randomIndex(imgOrder)
+      let oldTiles = document.getElementById("board").getElementsByTagName("img");
+      while(oldTiles.length > 0){
+        oldTiles[0].parentNode.removeChild(oldTiles[0]);
+      }
       for(let r = 0; r<rows; r++){
         for(let c = 0; c<columns; c++){
           let tile = document.createElement("img");
           tile.id = r.toString() + "-" + c.toString();
-          tile.src = pathFolder + imgOrder.shift() + ".png"
+          tile.src = pathFolder + gameImgOrder.shift() + ".png"
 
           tile.addEventListener("dragstart",dragStart);
           tile.addEventListener("dragover",dragOver);
@@ -33,6 +42,7 @@ export function startGame(){
           tile.addEventListener("dragend",dragEnd);
           document.getElementById("board").append(tile);
           document.getElementById('title').innerText = 'Puzzle Game'
+          
         }
       }
     }
@@ -95,9 +105,11 @@ function dragEnd(){
       obTile.src = airImg;
       airTile.src = tileImg;
   }
-  checkWin();
-  console.log(checkWin());
-
+  if(checkWin() === true){
+    console.log(checkWin());
+    document.getElementById('time-to-finish').innerText = "Time you can play : " + seconds + "s";
+    showVictoryScreen()
+  }
 }
 
 function randomIndex(array) {
@@ -122,8 +134,8 @@ function checkWin() {
     if (number != i + 1) {
       return false;
     }
+    
   }
-  stopTimer()
   return true;
 }
 
@@ -136,4 +148,33 @@ function startTimer() {
 
 function stopTimer() {
   clearInterval(timer);
+}
+
+
+
+document.getElementById('victory-button-replay').addEventListener('click', function() {
+  let victoryScreen = document.getElementById('container-victory');
+  if (victoryScreen.classList.contains('hidden')) {
+    victoryScreen.classList.remove('hidden');
+  } else {
+    victoryScreen.classList.add('hidden');
+  }
+  stopTimer();
+  startGame();
+});
+
+document.getElementById('paytoWin').addEventListener('click', function() {
+  solvePuzzle() 
+});
+
+function solvePuzzle() {
+  let tiles = document.getElementById("board").getElementsByTagName("img");
+  let sortedTiles = Array.from(tiles).sort((a, b) => {
+    let aNumber = Number(a.src.split("/").pop().split(".")[0]);
+    let bNumber = Number(b.src.split("/").pop().split(".")[0]);
+    return aNumber - bNumber;
+  });
+  for(let i = 0; i < sortedTiles.length; i++) {
+    document.getElementById("board").append(sortedTiles[i]);
+  }
 }

@@ -2,7 +2,6 @@ import { startGame } from "./function.js";
 
 document.getElementById('box').addEventListener('click', function() {
   let menu = document.getElementById('container-menu');
-  console.log(menu);
   if (menu.classList.contains('hidden')) {
     menu.classList.remove('hidden');
   } else {
@@ -13,7 +12,6 @@ document.getElementById('box').addEventListener('click', function() {
 
 document.getElementById('container-menu-close').addEventListener('click', function() {
   let menu = document.getElementById('container-menu');
-  console.log(menu);
   if (menu.classList.contains('hidden')) {
     menu.classList.remove('hidden');
   } else {
@@ -24,7 +22,6 @@ document.getElementById('container-menu-close').addEventListener('click', functi
 document.getElementById('login-button').addEventListener('click', function() {
   let containerGame = document.getElementById('container');
   let containerLogin = document.getElementById('container-login');
-  console.log(containerGame);
   if (containerGame.classList.contains('hidden')) {
     containerGame.classList.remove('hidden');
     containerLogin.classList.add('hidden');
@@ -34,3 +31,25 @@ document.getElementById('login-button').addEventListener('click', function() {
     containerLogin.classList.remove('hidden');
   }
 });
+
+
+document.getElementById('victory-button-Rank').addEventListener('click', function() {
+  let menu = document.getElementById('container-menu');
+  if (menu.classList.contains('hidden')) {
+    menu.classList.remove('hidden');
+  } else {
+    menu.classList.add('hidden');
+  }
+});
+
+
+
+export function showVictoryScreen() {
+  let victoryScreen = document.getElementById('container-victory');
+  if (victoryScreen.classList.contains('hidden')) {
+    victoryScreen.classList.remove('hidden');
+  } else {
+    victoryScreen.classList.add('hidden');
+  }
+}
+
