@@ -1,4 +1,4 @@
-import { startGame } from "./function.js";
+
 
 document.getElementById('box').addEventListener('click', function() {
   let menu = document.getElementById('container-menu');
@@ -19,18 +19,6 @@ document.getElementById('container-menu-close').addEventListener('click', functi
   }
 });
 
-document.getElementById('login-button').addEventListener('click', function() {
-  let containerGame = document.getElementById('container');
-  let containerLogin = document.getElementById('container-login');
-  if (containerGame.classList.contains('hidden')) {
-    containerGame.classList.remove('hidden');
-    containerLogin.classList.add('hidden');
-    startGame();
-  } else {
-    containerGame.classList.add('hidden');
-    containerLogin.classList.remove('hidden');
-  }
-});
 
 
 document.getElementById('victory-button-Rank').addEventListener('click', function() {
