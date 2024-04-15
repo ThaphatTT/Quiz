@@ -94,7 +94,7 @@ app.get('/getLeaderboardData', (req,res)=>{
   pool.getConnection((err, connection) =>{
     if(err) throw err
     console.log(`connected as id ${connection.threadId}`);
-    connection.query('SELECT leaderboard.id, players.playerName, leaderboard.timeToplay FROM leaderboard INNER JOIN players ON leaderboard.playerId = players.id ORDER BY leaderboard.timeToplay LIMIT 5', (err, rows) =>{
+    connection.query('SELECT leaderboard.id, players.playerName, leaderboard.timeToplay FROM leaderboard INNER JOIN players ON leaderboard.playerId = players.id ORDER BY leaderboard.timeToplay LIMIT 9', (err, rows) =>{
       if(!err){
         res.send(rows)
       }else{
